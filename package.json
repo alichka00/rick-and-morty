@@ -12,7 +12,7 @@
     "lint:es:fix": "npm run lint:es -- --fix",
     "lint:sc": "stylelint src/",
     "predeploy": "yarn build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.2",
