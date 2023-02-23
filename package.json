@@ -9,7 +9,9 @@
     "preview": "vite preview",
     "lint:es": "eslint --ext .js,.jsx,.ts,.tsx src",
     "lint:es:fix": "npm run lint:es -- --fix",
-    "lint:sc": "stylelint src/"
+    "lint:sc": "stylelint src/",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.2",
