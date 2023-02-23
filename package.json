@@ -1,6 +1,7 @@
 {
   "name": "rick-and-morty",
   "private": true,
+  "homepage": "https://alichka00.github.io/rick-and-morty/",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
@@ -10,7 +11,7 @@
     "lint:es": "eslint --ext .js,.jsx,.ts,.tsx src",
     "lint:es:fix": "npm run lint:es -- --fix",
     "lint:sc": "stylelint src/",
-    "predeploy": "npm run build",
+    "predeploy": "yarn build",
     "deploy": "gh-pages -d build"
   },
   "dependencies": {
