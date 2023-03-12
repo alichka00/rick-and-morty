@@ -1,40 +1,71 @@
+import { ChangeEvent } from 'react'
+import { useSearchParams } from 'react-router-dom'
+
 import * as S from './styles'
 
-import { CardCharacter } from 'components/CardCharacter'
+import { CardsCharacter } from 'components/CardsCharacter'
+import { Footer } from 'components/Footer'
 import { Pagination } from 'components/Pagination'
-import { GenderPopup } from 'components/Popups/GenderPopup'
-import { StatusPopup } from 'components/Popups/StatusPopup'
 import { Search } from 'components/Search'
-import useDebounce from 'hooks/debounce'
-import { useAppDispatch, useAppSelector } from 'store'
+import { SelectField } from 'components/SelectField'
+import useDebounce from 'hooks/useDebounce'
 import { useGetCharactersQuery } from 'store/charactersApi'
-import { changePage } from 'store/filter'
+import { searchParamsToObject } from 'utils/searchParams'
 
 export const Home = () => {
-  const { search, status, gender, page } = useAppSelector((state) => state.filter)
-  const dispatch = useAppDispatch()
+  const [searchParams, setSearchParams] = useSearchParams()
+  const currentParams = searchParamsToObject(searchParams)
+  const params = {
+    page: Number(searchParams.get('page')) || 1,
+    search: searchParams.get('search') || '',
+    status: searchParams.get('status') || '',
+    gender: searchParams.get('gender') || '',
+  }
 
-  const debouncedSearch = useDebounce(search, 300)
+  const debouncedSearch = useDebounce(params.search, 300)
   const apiData = {
     name: debouncedSearch,
-    status: status,
-    gender: gender,
-    page: page,
+    status: params.status,
+    gender: params.gender,
+    page: params.page,
   }
   const { data, isError, isLoading } = useGetCharactersQuery(apiData)
 
-  const onChangePage = (page: number) => {
-    dispatch(changePage(page))
+  const onChangeStatusSelect = (e: ChangeEvent<HTMLSelectElement>) => {
+    setSearchParams({
+      ...currentParams,
+      status: e.target.value,
+    })
   }
+
+  const onChangeGenderSelect = (e: ChangeEvent<HTMLSelectElement>) => {
+    setSearchParams({
+      ...currentParams,
+      gender: e.target.value,
+    })
+  }
+
+  const statusList = ['Alive', 'Dead', 'Unknown']
+  const genderList = ['Male', 'Female', 'Genderless', 'Unknown']
 
   return (
     <S.Container>
       <Search />
       <S.FilterWrap>
-        <S.WrapperPopups>
-          <StatusPopup />
-          <GenderPopup />
-        </S.WrapperPopups>
+        <S.WrapperSelects>
+          <SelectField
+            defaultValue='Gender'
+            options={genderList}
+            value={params.gender}
+            onChange={onChangeGenderSelect}
+          />
+          <SelectField
+            defaultValue='Status'
+            options={statusList}
+            value={params.status}
+            onChange={onChangeStatusSelect}
+          />
+        </S.WrapperSelects>
         <S.CountCharacters>{isError ? '0' : <>{data?.info.count}</>} Characters</S.CountCharacters>
       </S.FilterWrap>
 
@@ -43,9 +74,10 @@ export const Home = () => {
       ) : isLoading ? (
         <div>Loading...</div>
       ) : data ? (
-        <CardCharacter characters={data?.results || []} />
+        <CardsCharacter characters={data?.results || []} />
       ) : null}
-      <Pagination currentPage={page} onCgangePage={onChangePage} pages={data?.info.pages || 1} />
+      <Pagination page={data?.info.pages || 1} currentPage={params.page} siblingCount={1} />
+      <Footer />
     </S.Container>
   )
 }

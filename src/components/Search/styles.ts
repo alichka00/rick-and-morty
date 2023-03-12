@@ -11,14 +11,17 @@ export const Container = styled.div`
 `
 
 export const Input = styled.input`
+  user-select: none;
+
   width: 420px;
   padding: 10px 20px;
 
-  font-size: 16px;
+  font-family: Raleway, sans-serif;
+  font-size: 17px;
   color: #fffc;
 
   background: transparent;
-  border: 1px solid #9dd1c5;
+  border: 1px solid #61a999;
   border-radius: 15px;
   outline: none;
 

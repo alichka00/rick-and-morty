@@ -20,7 +20,7 @@ export const FilterWrap = styled.div`
   }
 `
 
-export const WrapperPopups = styled.div`
+export const WrapperSelects = styled.div`
   display: flex;
   gap: 25px;
 
@@ -30,7 +30,7 @@ export const WrapperPopups = styled.div`
 `
 export const CountCharacters = styled.div`
   font-size: 24px;
-  color: #76b644;
+  color: #61a999;
   text-align: center;
 `
 

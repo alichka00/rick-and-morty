@@ -5,21 +5,27 @@ interface I_ImageProps {
   alt: string
 }
 
-export const Cards = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 30px;
-  justify-items: center;
-`
 export const Card = styled.div`
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
+  min-width: 260px;
+  min-height: 360px;
+
   border: 1px solid #33957f;
   border-radius: 5px;
 `
 export const Image = styled.img<I_ImageProps>`
+  user-select: none;
   width: 100%;
 `
+
 export const CardContent = styled.div`
+  margin: auto;
   padding: 10px;
   text-align: center;
+`
+export const CharacterName = styled.h3`
+  font-size: 18px;
 `
