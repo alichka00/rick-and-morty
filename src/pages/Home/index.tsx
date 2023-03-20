@@ -8,6 +8,7 @@ import { Footer } from 'components/Footer'
 import { Pagination } from 'components/Pagination'
 import { Search } from 'components/Search'
 import { SelectField } from 'components/SelectField'
+import { Modal } from 'features/Modal'
 import useDebounce from 'hooks/useDebounce'
 import { useGetCharactersQuery } from 'store/charactersApi'
 import { searchParamsToObject } from 'utils/searchParams'
@@ -45,6 +46,20 @@ export const Home = () => {
     })
   }
 
+  const onClearGenderSelect = () => {
+    setSearchParams({
+      ...currentParams,
+      gender: '',
+    })
+  }
+
+  const onClearStatusSelect = () => {
+    setSearchParams({
+      ...currentParams,
+      status: '',
+    })
+  }
+
   const statusList = ['Alive', 'Dead', 'Unknown']
   const genderList = ['Male', 'Female', 'Genderless', 'Unknown']
 
@@ -58,12 +73,14 @@ export const Home = () => {
             options={genderList}
             value={params.gender}
             onChange={onChangeGenderSelect}
+            onClear={onClearGenderSelect}
           />
           <SelectField
             defaultValue='Status'
             options={statusList}
             value={params.status}
             onChange={onChangeStatusSelect}
+            onClear={onClearStatusSelect}
           />
         </S.WrapperSelects>
         <S.CountCharacters>{isError ? '0' : <>{data?.info.count}</>} Characters</S.CountCharacters>
@@ -76,6 +93,7 @@ export const Home = () => {
       ) : data ? (
         <CardsCharacter characters={data?.results || []} />
       ) : null}
+      <Modal />
       <Pagination page={data?.info.pages || 1} currentPage={params.page} siblingCount={1} />
       <Footer />
     </S.Container>

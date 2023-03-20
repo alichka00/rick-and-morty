@@ -5,6 +5,7 @@ interface I_IsOpened {
 }
 
 export const SelectWrapper = styled.div<I_IsOpened>`
+  position: relative;
   width: 200px;
   height: 40px;
   line-height: 40px;
@@ -35,4 +36,16 @@ export const Select = styled.select`
 export const Option = styled.option`
   font-size: 17px;
   color: #9dd1c5;
+`
+
+export const SelectClose = styled.div`
+  position: absolute;
+  z-index: 1;
+  top: 1px;
+  right: 19px;
+`
+
+export const Divider = styled.span`
+  margin-left: 3px;
+  border-left: 1px solid #6c6c6c;
 `

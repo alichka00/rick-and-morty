@@ -31,19 +31,69 @@ export const Pagination = ({ page, currentPage, siblingCount }: I_PaginationProp
     }
   }
   const onChangeNextPage = (page: number | string) => {
-    if (page < paginationRange![paginationRange!.length - 1]) {
-      setSearchParams({ ...currentParams, page: String(+page + 1) })
+    if (paginationRange) {
+      if (page < paginationRange[paginationRange.length - 1]) {
+        setSearchParams({ ...currentParams, page: String(+page + 1) })
+      }
     }
   }
+
+  const variants = {
+    initial: {
+      color: '#61a999',
+      background: '#0f0d0df7',
+    },
+    whileHover: {
+      color: '#008000',
+      background: '#9dd1c5',
+    },
+  }
+
   return (
     <S.PaginationWrapper>
-      <S.Page onClick={() => onChangePrevPage(currentPage)}>{'<'}</S.Page>
+      <S.Page
+        variants={variants}
+        initial={'initial'}
+        whileHover={'whileHover'}
+        transition={{
+          duration: 0.5,
+        }}
+        onClick={() => onChangePrevPage(currentPage)}
+      >
+        {'<'}
+      </S.Page>
       {paginationRange?.map((item) => (
-        <S.Page key={item} isActive={currentPage === item} onClick={() => onChangePage(item)}>
+        <S.Page
+          variants={variants}
+          initial={'initial'}
+          whileHover={'whileHover'}
+          transition={{
+            duration: 0.5,
+          }}
+          animate={{
+            color: currentPage === item ? '#008000' : '#61a999',
+            background: currentPage === item ? '#9dd1c5' : '#0f0d0df7',
+            transition: {
+              duration: 0.5,
+            },
+          }}
+          key={item}
+          onClick={() => onChangePage(item)}
+        >
           {item}
         </S.Page>
       ))}
-      <S.Page onClick={() => onChangeNextPage(currentPage)}>{'>'}</S.Page>
+      <S.Page
+        variants={variants}
+        initial={'initial'}
+        whileHover={'whileHover'}
+        transition={{
+          duration: 0.5,
+        }}
+        onClick={() => onChangeNextPage(currentPage)}
+      >
+        {'>'}
+      </S.Page>
     </S.PaginationWrapper>
   )
 }

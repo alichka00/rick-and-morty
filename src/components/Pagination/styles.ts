@@ -1,8 +1,5 @@
-import styled, { css } from 'styled-components'
-
-interface I_PageProps {
-  isActive?: boolean
-}
+import { motion } from 'framer-motion'
+import styled from 'styled-components'
 
 export const PaginationWrapper = styled.div`
   user-select: none;
@@ -10,7 +7,7 @@ export const PaginationWrapper = styled.div`
   justify-content: center;
   margin: 45px 0;
 `
-export const Page = styled.div<I_PageProps>`
+export const Page = styled(motion.div)`
   cursor: pointer;
 
   display: inline-block;
@@ -25,23 +22,4 @@ export const Page = styled.div<I_PageProps>`
 
   border: 1px solid #9dd1c5;
   border-radius: 10px;
-
-  transition: 0.5s;
-
-  :hover {
-    color: green;
-    background: #9dd1c5;
-  }
-
-  ${({ isActive }) =>
-    isActive
-      ? css`
-          transition: 0.5s;
-          background-color: #9dd1c5;
-          color: green;
-        `
-      : css`
-          transition: 0.5s;
-          background-color: transparent;
-        `}
 `

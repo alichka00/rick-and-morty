@@ -3,9 +3,12 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 
 import { charactersApi } from './charactersApi'
 
+import { modalSlice } from './Modal'
+
 const store = configureStore({
   reducer: {
     [charactersApi.reducerPath]: charactersApi.reducer,
+    modalSlice: modalSlice.reducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(charactersApi.middleware),
 })

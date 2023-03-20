@@ -13,4 +13,8 @@ export default createGlobalStyle`
     color: #fffc;
     background-color: #0f0d0df7;
   }
+  
+  li{
+    list-style-type: none;
+  }
 `

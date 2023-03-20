@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion'
 import styled from 'styled-components'
 
 interface I_ImageProps {
@@ -5,7 +6,9 @@ interface I_ImageProps {
   alt: string
 }
 
-export const Card = styled.div`
+export const Card = styled(motion.div)`
+  cursor: pointer;
+
   overflow: hidden;
   display: flex;
   flex-direction: column;
