@@ -44,8 +44,3 @@ export const SelectClose = styled.div`
   top: 1px;
   right: 19px;
 `
-
-export const Divider = styled.span`
-  margin-left: 3px;
-  border-left: 1px solid #6c6c6c;
-`

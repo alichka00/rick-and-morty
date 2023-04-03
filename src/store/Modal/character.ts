@@ -10,17 +10,17 @@ const initialState: I_InitialState = {
   selectedCharacter: null,
 }
 
-export const modalSlice = createSlice({
+export const modalSliceCharacter = createSlice({
   name: 'modal',
   initialState,
   reducers: {
-    openModal(state, action: PayloadAction<I_Character>) {
+    openModalCharacter(state, action: PayloadAction<I_Character>) {
       state.selectedCharacter = action.payload
     },
-    closeModal(state) {
+    closeModalCharacter(state) {
       state.selectedCharacter = null
     },
   },
 })
 
-export const { openModal, closeModal } = modalSlice.actions
+export const { openModalCharacter, closeModalCharacter } = modalSliceCharacter.actions

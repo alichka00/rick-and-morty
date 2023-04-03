@@ -4,7 +4,7 @@ export default createGlobalStyle`
   * {
     box-sizing: border-box;
     margin: 0;
-    padding: 0;
+    padding: 0; 
   }
 
 
@@ -16,5 +16,10 @@ export default createGlobalStyle`
   
   li{
     list-style-type: none;
+  }
+
+  a {
+    color: #9dd1c5;
+    text-decoration: none;
   }
 `

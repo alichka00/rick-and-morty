@@ -6,10 +6,9 @@ interface I_ImageProps {
   alt: string
 }
 
-export const Card = styled(motion.div)`
+export const Card = styled.div`
   cursor: pointer;
 
-  overflow: hidden;
   display: flex;
   flex-direction: column;
 
@@ -19,9 +18,11 @@ export const Card = styled(motion.div)`
   border: 1px solid #33957f;
   border-radius: 5px;
 `
-export const Image = styled.img<I_ImageProps>`
+export const Image = styled(motion.img)<I_ImageProps>`
   user-select: none;
   width: 100%;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
 `
 
 export const CardContent = styled.div`

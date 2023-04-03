@@ -2,15 +2,20 @@ import { configureStore } from '@reduxjs/toolkit'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 
 import { charactersApi } from './charactersApi'
+import { episodesApi } from './episodesApi'
 
-import { modalSlice } from './Modal'
+import { modalSliceCharacter } from './Modal/character'
+import { modalSliceEpisode } from './Modal/episode'
 
 const store = configureStore({
   reducer: {
     [charactersApi.reducerPath]: charactersApi.reducer,
-    modalSlice: modalSlice.reducer,
+    [episodesApi.reducerPath]: episodesApi.reducer,
+    modalSliceCharacter: modalSliceCharacter.reducer,
+    modalSliceEpisode: modalSliceEpisode.reducer,
   },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(charactersApi.middleware),
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(charactersApi.middleware, episodesApi.middleware),
 })
 
 export default store

@@ -1,4 +1,4 @@
-import { ChangeEvent, useRef, useState } from 'react'
+import { ChangeEvent, ReactNode, useRef, useState } from 'react'
 
 import { RiCloseFill } from 'react-icons/ri'
 
@@ -8,18 +8,18 @@ import { useClickOutside } from 'hooks/useClickOutside'
 
 interface I_SelectFieldProps {
   value: string
-  options: string[]
   onChange: (e: ChangeEvent<HTMLSelectElement>) => void
   defaultValue: string
   onClear: () => void
+  children: ReactNode
 }
 
 export const SelectField = ({
   value,
-  options,
   onChange,
   defaultValue,
   onClear,
+  children,
 }: I_SelectFieldProps) => {
   const [isOpened, setIsOpened] = useState(false)
   const wrapperRef = useRef(null)
@@ -36,17 +36,14 @@ export const SelectField = ({
       onClick={() => setIsOpened((prev) => !prev)}
       isOpened={isOpened}
     >
-      <S.SelectClose>
-        <RiCloseFill size={14} onClick={onClear} style={{ cursor: 'pointer' }} />
-        <S.Divider />
-      </S.SelectClose>
+      {value && (
+        <S.SelectClose>
+          <RiCloseFill size={14} onClick={onClear} style={{ cursor: 'pointer' }} />
+        </S.SelectClose>
+      )}
       <S.Select value={value} onChange={onChange}>
         <S.Option hidden>{defaultValue}</S.Option>
-        {options.map((item) => (
-          <S.Option key={item} value={item}>
-            {item}
-          </S.Option>
-        ))}
+        {children}
       </S.Select>
     </S.SelectWrapper>
   )

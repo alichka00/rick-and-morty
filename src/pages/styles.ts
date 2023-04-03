@@ -1,12 +1,17 @@
+import { motion } from 'framer-motion'
 import styled from 'styled-components'
 
-export const Container = styled.div`
+interface I_FilterWrapProp {
+  gap?: number
+}
+
+export const Container = styled(motion.div)`
   width: 100%;
   max-width: 1240px;
   margin: 0 auto;
   padding: 0 20px;
 `
-export const FilterWrap = styled.div`
+export const FilterWrap = styled(motion.div)<I_FilterWrapProp>`
   display: flex;
   gap: 30px;
   align-items: center;
@@ -16,11 +21,12 @@ export const FilterWrap = styled.div`
 
   @media (max-width: 600px) {
     flex-direction: column;
+    gap: ${({ gap = 30 }) => gap}px;
     align-items: stretch;
   }
 `
 
-export const WrapperSelects = styled.div`
+export const WrapperSelects = styled(motion.div)`
   display: flex;
   gap: 25px;
 
@@ -28,7 +34,7 @@ export const WrapperSelects = styled.div`
     flex-direction: column;
   }
 `
-export const CountCharacters = styled.div`
+export const CountCharacters = styled(motion.div)`
   font-size: 24px;
   color: #61a999;
   text-align: center;
@@ -37,4 +43,9 @@ export const CountCharacters = styled.div`
 export const Error = styled.div`
   font-size: 30px;
   text-align: center;
+`
+
+export const Option = styled.option`
+  font-size: 17px;
+  color: #9dd1c5;
 `

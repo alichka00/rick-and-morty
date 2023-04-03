@@ -1,19 +1,16 @@
+import { motion } from 'framer-motion'
 import { ChangeEvent } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
-import * as S from './styles'
+import * as S from '../styles'
 
-import { CardsCharacter } from 'components/CardsCharacter'
-import { Footer } from 'components/Footer'
-import { Pagination } from 'components/Pagination'
-import { Search } from 'components/Search'
-import { SelectField } from 'components/SelectField'
-import { Modal } from 'features/Modal'
+import { CardsCharacter, Search, SelectField, Pagination, Footer } from 'components'
+import { ModalCharacter } from 'features/Modal/Characters'
 import useDebounce from 'hooks/useDebounce'
 import { useGetCharactersQuery } from 'store/charactersApi'
 import { searchParamsToObject } from 'utils/searchParams'
 
-export const Home = () => {
+export const Characters = () => {
   const [searchParams, setSearchParams] = useSearchParams()
   const currentParams = searchParamsToObject(searchParams)
   const params = {
@@ -63,29 +60,50 @@ export const Home = () => {
   const statusList = ['Alive', 'Dead', 'Unknown']
   const genderList = ['Male', 'Female', 'Genderless', 'Unknown']
 
+  const animation = {
+    hidden: {
+      y: -50,
+      opacity: 0,
+    },
+    visible: (custom: number) => ({
+      y: 0,
+      opacity: 1,
+      transition: {
+        delay: custom,
+      },
+    }),
+  }
+
   return (
-    <S.Container>
-      <Search />
-      <S.FilterWrap>
+    <S.Container initial='hidden' whileInView='visible'>
+      <motion.div variants={animation}>
+        <Search />
+      </motion.div>
+      <S.FilterWrap variants={animation} custom={0.15}>
         <S.WrapperSelects>
           <SelectField
             defaultValue='Gender'
-            options={genderList}
             value={params.gender}
             onChange={onChangeGenderSelect}
             onClear={onClearGenderSelect}
-          />
+          >
+            {genderList.map((item) => (
+              <S.Option key={item}>{item}</S.Option>
+            ))}
+          </SelectField>
           <SelectField
             defaultValue='Status'
-            options={statusList}
             value={params.status}
             onChange={onChangeStatusSelect}
             onClear={onClearStatusSelect}
-          />
+          >
+            {statusList.map((item) => (
+              <S.Option key={item}>{item}</S.Option>
+            ))}
+          </SelectField>
         </S.WrapperSelects>
         <S.CountCharacters>{isError ? '0' : <>{data?.info.count}</>} Characters</S.CountCharacters>
       </S.FilterWrap>
-
       {isError ? (
         <S.Error>Sorry, but nothing was found</S.Error>
       ) : isLoading ? (
@@ -93,7 +111,7 @@ export const Home = () => {
       ) : data ? (
         <CardsCharacter characters={data?.results || []} />
       ) : null}
-      <Modal />
+      <ModalCharacter />
       <Pagination page={data?.info.pages || 1} currentPage={params.page} siblingCount={1} />
       <Footer />
     </S.Container>

@@ -1,12 +1,16 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-import { I_RootObject } from '../interfaces/character'
+import { I_RootObject, I_Character } from '../interfaces/character'
 
 interface I_Data {
   name: string
   status: string
   gender: string
   page: string
+}
+
+interface I_Id {
+  id: string
 }
 
 export const charactersApi = createApi({
@@ -19,7 +23,13 @@ export const charactersApi = createApi({
         method: 'get',
       }),
     }),
+    getCharactersId: builder.query<I_Character[], unknown>({
+      query: (id: I_Id) => ({
+        url: `/character/${id}`,
+        method: 'get',
+      }),
+    }),
   }),
 })
 
-export const { useGetCharactersQuery } = charactersApi
+export const { useGetCharactersQuery, useGetCharactersIdQuery } = charactersApi
