@@ -6,7 +6,7 @@ import { I_Character } from 'interfaces/character'
 import { useAppDispatch } from 'store'
 import { openModalCharacter } from 'store/Modal/character'
 
-export const CardCharacter = (character: I_Character) => {
+export const Character = (character: I_Character) => {
   const dispatch = useAppDispatch()
   const [, updateState] = useState({})
   const forceUpdate = useCallback(() => updateState({}), [])
@@ -17,7 +17,7 @@ export const CardCharacter = (character: I_Character) => {
   }
 
   return (
-    <S.Card>
+    <S.List>
       <S.Image
         whileHover={{
           scale: 1.025,
@@ -33,12 +33,12 @@ export const CardCharacter = (character: I_Character) => {
         src={character.image}
         alt={character.name}
       />
-      <S.CardContent>
+      <S.ListContent>
         <S.CharacterName>{character.name}</S.CharacterName>
         <p>
           {character.gender} | {character.status}
         </p>
-      </S.CardContent>
-    </S.Card>
+      </S.ListContent>
+    </S.List>
   )
 }

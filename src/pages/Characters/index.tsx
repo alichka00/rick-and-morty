@@ -4,9 +4,11 @@ import { useSearchParams } from 'react-router-dom'
 
 import * as S from '../styles'
 
-import { CardsCharacter, Search, SelectField, Pagination, Footer } from 'components'
-import { ModalCharacter } from 'features/Modal/Characters'
+import { ListCharacter, Search, SelectField, Pagination, Footer } from 'components'
+import { episodeVariants, statusList, genderList } from 'data'
+import { ModalCharacter } from 'features/Modal/Character'
 import useDebounce from 'hooks/useDebounce'
+
 import { useGetCharactersQuery } from 'store/charactersApi'
 import { searchParamsToObject } from 'utils/searchParams'
 
@@ -57,29 +59,12 @@ export const Characters = () => {
     })
   }
 
-  const statusList = ['Alive', 'Dead', 'Unknown']
-  const genderList = ['Male', 'Female', 'Genderless', 'Unknown']
-
-  const animation = {
-    hidden: {
-      y: -50,
-      opacity: 0,
-    },
-    visible: (custom: number) => ({
-      y: 0,
-      opacity: 1,
-      transition: {
-        delay: custom,
-      },
-    }),
-  }
-
   return (
-    <S.Container initial='hidden' whileInView='visible'>
-      <motion.div variants={animation}>
+    <S.Container initial='hidden' animate='visible'>
+      <motion.div variants={episodeVariants}>
         <Search />
       </motion.div>
-      <S.FilterWrap variants={animation} custom={0.15}>
+      <S.FilterWrap variants={episodeVariants} custom={0.15}>
         <S.WrapperSelects>
           <SelectField
             defaultValue='Gender'
@@ -109,7 +94,7 @@ export const Characters = () => {
       ) : isLoading ? (
         <div>Loading...</div>
       ) : data ? (
-        <CardsCharacter characters={data?.results || []} />
+        <ListCharacter characters={data?.results || []} />
       ) : null}
       <ModalCharacter />
       <Pagination page={data?.info.pages || 1} currentPage={params.page} siblingCount={1} />

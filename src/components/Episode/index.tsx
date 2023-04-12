@@ -6,6 +6,7 @@ import { I_Episode } from 'interfaces/episode'
 import { useAppDispatch } from 'store'
 
 import { openModalEpisode } from 'store/Modal/episode'
+import { formatDate } from 'utils/formatDate'
 
 export const Episode = (episodeItem: I_Episode) => {
   const dispatch = useAppDispatch()
@@ -41,7 +42,7 @@ export const Episode = (episodeItem: I_Episode) => {
         <b>Air Date: </b> {episodeItem.air_date}
       </li>
       <li>
-        <b>Created:</b> {episodeItem.created}
+        <b>Created:</b> {episodeItem.created && formatDate(episodeItem.created)}
       </li>
     </S.List>
   )

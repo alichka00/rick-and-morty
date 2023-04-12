@@ -1,11 +1,14 @@
+import { motion } from 'framer-motion'
 import styled from 'styled-components'
 
-import { ModalOverlay, ModalContent } from '../Characters/styles'
+import { ModalOverlay, ModalContent } from '../Character/styles'
 
 import { List } from 'components/Episode/styles'
 
 export const ListModal = styled(List)`
+  cursor: auto;
   width: 100%;
+  padding: 20px 20px 0;
   border-radius: 0;
 `
 
@@ -37,4 +40,9 @@ export const ModalContentEpisode = styled(ModalContent)`
   @media (max-width: 535px) {
     width: 85%;
   }
+`
+
+export const ModalCharacters = styled(motion.div)`
+  padding: 0 20px;
+  background-color: #1f1f1f;
 `

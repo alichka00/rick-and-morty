@@ -6,26 +6,27 @@ interface I_ImageProps {
   alt: string
 }
 
-export const Card = styled.div`
-  cursor: pointer;
-
+export const List = styled.div`
   display: flex;
   flex-direction: column;
 
   min-width: 260px;
   min-height: 360px;
 
-  border: 1px solid #33957f;
+  background-color: #1f1f1f;
   border-radius: 5px;
 `
 export const Image = styled(motion.img)<I_ImageProps>`
+  cursor: pointer;
   user-select: none;
+
   width: 100%;
+
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
 `
 
-export const CardContent = styled.div`
+export const ListContent = styled.div`
   margin: auto;
   padding: 10px;
   text-align: center;

@@ -5,6 +5,7 @@ import { useSearchParams } from 'react-router-dom'
 import * as S from '../styles'
 
 import { Search, SelectField, ListEpisode, Episode, Pagination, Footer } from 'components'
+import { episodeVariants, episodeList } from 'data'
 import { ModalEpisode } from 'features/Modal/Episode'
 import useDebounce from 'hooks/useDebounce'
 import { I_Episode } from 'interfaces/episode'
@@ -46,10 +47,7 @@ export const Episodes = () => {
 
   const count = data?.info.count || 0
 
-  const episodeList = []
-  for (let i = 0; i <= count - 1; i++) {
-    episodeList.push({ episode: `Episode - ${i + 1}`, id: i + 1 })
-  }
+  const episodes = episodeList(count)
 
   let episode
   if (params.id) {
@@ -58,21 +56,10 @@ export const Episodes = () => {
     episode = <ListEpisode episodes={data?.results || []} />
   }
 
-  const animation = {
-    hidden: {
-      y: -50,
-      opacity: 0,
-    },
-    visible: {
-      y: 0,
-      opacity: 1,
-    },
-  }
-
   return (
-    <S.Container initial='hidden' whileInView='visible'>
+    <S.Container initial='hidden' animate='visible'>
       <>
-        <motion.div variants={animation}>
+        <motion.div variants={episodeVariants}>
           <S.FilterWrap gap={0}>
             <Search />
             <SelectField
@@ -81,7 +68,7 @@ export const Episodes = () => {
               onChange={onChangeEpisodeSelect}
               onClear={onClearEpisodeSelect}
             >
-              {episodeList.map((item) => (
+              {episodes.map((item) => (
                 <S.Option key={item.id} value={item.id}>
                   {item.episode}
                 </S.Option>
@@ -94,7 +81,7 @@ export const Episodes = () => {
         ) : isLoading ? (
           <div>Loading...</div>
         ) : data || dataId ? (
-          { ...episode }
+          episode
         ) : null}
         <ModalEpisode />
         <Pagination page={data?.info.pages || 1} currentPage={params.page} siblingCount={1} />

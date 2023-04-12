@@ -1,18 +1,19 @@
 import * as S from './styles'
 
-import { CharactersModal } from 'components/CharactersModal'
+import { CharactersModal } from 'features/Modal/Episode/extensions/CharactersModal'
 import { useEscapeKey } from 'hooks/useEscapeKey'
 import { useAppSelector, useAppDispatch } from 'store'
 import { useGetCharactersIdQuery } from 'store/charactersApi'
 import { closeModalEpisode } from 'store/Modal/episode'
+import { formatDate } from 'utils/formatDate'
 
 export const ModalEpisode = () => {
   const dispatch = useAppDispatch()
   const selectedEpisode = useAppSelector((state) => state.modalSliceEpisode.selectedEpisode)
 
-  const idCharacter = selectedEpisode?.characters.map((item) => item.replace(/[^\d]/g, ''))
+  const idCharacter = selectedEpisode?.characters.map((item) => item.replace(/[^\d]/g, '')) || []
 
-  const { data } = useGetCharactersIdQuery(idCharacter)
+  const { data } = useGetCharactersIdQuery(idCharacter, { skip: !idCharacter?.length })
 
   const handleCloseModal = () => {
     dispatch(closeModalEpisode())
@@ -40,11 +41,17 @@ export const ModalEpisode = () => {
                 <b>Air Data:</b> {selectedEpisode.air_date}
               </li>
               <li>
-                <b>Created:</b> {selectedEpisode.created}
+                <b>Created:</b> {formatDate(selectedEpisode.created)}
               </li>
             </ul>
-            {data ? <CharactersModal characters={data || []} /> : null}
           </S.ListModal>
+          <S.ModalCharacters
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            {data ? <CharactersModal characters={data || []} /> : null}
+          </S.ModalCharacters>
         </S.ModalContentEpisode>
       </S.ModalOverlayEpisode>
     </div>
